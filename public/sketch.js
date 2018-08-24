@@ -14,8 +14,8 @@ function setup() {
    createCanvas(windowWidth, windowHeight)
    //load background
    bg = new Background(back, 5)
-   //Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCount)
-   game = new Game(bg, 5, windowWidth/2 - 300, windowHeight/2, 240, 300, 10, 3)
+   //Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCount, pause)
+   game = new Game(bg, 5, windowWidth/2 - 300, windowHeight/2, 200, 300, 10, 3, false)
    // bird = new Bird(5, windowWidth/2 - 300, 0)
    game.setup()
 }

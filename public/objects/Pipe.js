@@ -8,6 +8,7 @@ function Pipe(x, w, gap, speed, interval) {
    this.gap = gap
    this.speed = speed
    this.interval = interval
+   this.pointAdded = false
 
    this.setup = function() {
       this.y1 = random(100, 300)
@@ -30,6 +31,7 @@ function Pipe(x, w, gap, speed, interval) {
       //loop through
       if (this.x <= -this.w) {
          this.x = windowWidth + this.interval
+         this.pointAdded = false
          this.setup()
       }
    }
@@ -43,10 +45,17 @@ function Pipe(x, w, gap, speed, interval) {
             // console.log({'bx': bird.position.x, 'x': this.x, 'bird.mass*8': bird.mass*8, 'this.w': this.w})
          }
       }
+      else if ((bird.position.x + bird.mass*8) > this.x && (bird.position.x - bird.mass*8) < (this.x+this.w)) {
+         if (!this.pointAdded) {
+            bird.earnPoint()
+            this.pointAdded = true
+         }
+      }
    }
 
    this.reset = function() {
       this.x = this.ogX
       this.w = this.ogW
+      this.pointAdded = false
    }
 }

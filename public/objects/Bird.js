@@ -39,10 +39,12 @@ function Bird(mass, x, y) {
          let angle = map(this.position.y, windowHeight, 0, .1 * Math.PI, -.3 * Math.PI)
          rotate(angle)
          image(img, 0, 0, this.mass*24, this.mass*24)
-         fill(255)
-         ellipse(0, 0, this.mass*16, this.mass*16)
+         // fill(255)
+         // ellipse(0, 0, this.mass*16, this.mass*16)
          // ellipse(this.position.x - this.mass*8 - 10, this.position.y - this.mass*8 - 12, 5, 5)
       pop()
+      fill(255)
+      // ellipse(this.position.x, this.position.y, 100, 100)
    }
 
    //check edges function (useless function)
