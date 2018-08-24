@@ -21,14 +21,16 @@ function setup() {
 }
 
 function draw() {
-   background(0)
-   bg.load()
-   game.draw(bg, birdImg, pipeDownImg, pipeUpImg)
+   if (game.run) {
+      background(0)
+      bg.load()
+      game.draw(bg, birdImg, pipeDownImg, pipeUpImg)
+   }
 }
 
 function keyPressed() {
-   if (key === ' ' && frameCount >= 40) {
-      game.control()
+   if (key === ' ') {
+      game.control(-9.8 * 5)
       // console.log(frameCount)
    }
 }
