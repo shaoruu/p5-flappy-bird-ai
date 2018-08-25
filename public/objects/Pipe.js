@@ -11,7 +11,8 @@ function Pipe(x, w, gap, speed, interval) {
    this.pointAdded = false
 
    this.setup = function() {
-      this.y1 = random(100, 300)
+      // this.y1 = random(100, 300)
+      this.y1 = random(130, windowHeight - this.gap - 130)
       this.y2 = this.y1 + this.gap
       // console.log({'y1': this.y1, 'y2': this.y2})
       // console.log(this.x)
@@ -38,14 +39,14 @@ function Pipe(x, w, gap, speed, interval) {
 
    this.hit = function(bird) {
       //detect y1 and y2
-      if (bird.position.y - bird.mass*8 < this.y1 || bird.position.y + bird.mass*8 > this.y2) {
+      if (bird.position.y - bird.mass*5.3/2 < this.y1 || bird.position.y + bird.mass*5.3/2 > this.y2) {
          // console.log({'y1': this.y1, 'y2': this.y2})
-         if ((bird.position.x + bird.mass*8) > this.x && (bird.position.x - bird.mass*8) < (this.x+this.w)) {
+         if ((bird.position.x + bird.mass*5.3/2) > this.x && (bird.position.x - bird.mass*5.3/2) < (this.x+this.w)) {
             bird.kill()
-            // console.log({'bx': bird.position.x, 'x': this.x, 'bird.mass*8': bird.mass*8, 'this.w': this.w})
+            // console.log({'bx': bird.position.x, 'x': this.x, 'bird.mass*6': bird.mass*6, 'this.w': this.w})
          }
       }
-      else if ((bird.position.x + bird.mass*8) > this.x && (bird.position.x - bird.mass*8) < (this.x+this.w)) {
+      else if ((bird.position.x + bird.mass*5.3/2) > this.x + this.w/3*2 && (bird.position.x - bird.mass*5.3/2) < (this.x+this.w)) {
          if (!this.pointAdded) {
             bird.earnPoint()
             this.pointAdded = true

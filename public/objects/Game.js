@@ -5,6 +5,7 @@ function Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCou
    this.pipes = new Array(this.pipeCount)
    this.bg = bg
    this.run = true
+   this.pause = pause
 
    // console.log(this.pipeCount)
    this.setup = function() {
@@ -15,27 +16,35 @@ function Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCou
          this.pipes[i].setup()
       }
       this.control(-9.8 * 2)
+      // console.log(this.bird)
       // console.log(windowWidth)
    }
 
-   this.draw = function(bg, birdImg, pipeDownImg, pipeUpImg) {
+   this.draw = function(bg, birdImg, pipeDownImg, pipeUpImg, font) {
       for (let i = 0; i < this.pipeCount; i++) {
          this.pipes[i].draw(this.bird, pipeDownImg, pipeUpImg)
          this.pipes[i].hit(this.bird)
       }
 
       if (this.bird.killed) {
-         this.reset()
-         if (this.pause) this.run = false
+         this.reset(this.pause)
+         if (this.pause) {
+            this.run = false
+         }
+         else
+            this.bird.setScore(0)
       }
 
       this.bird.update(9.8 * 0.3)
       this.bird.draw(birdImg)
       this.bird.checkEdges()
-
-      textSize(32)
-      fill(0, 102, 153)
-      text(this.bird.score, 10, 60)
+      push()
+         rectMode(CENTER)
+         textFont(font)
+         textSize(100)
+         fill(255)
+         text(this.bird.score, windowWidth/2, 100)
+      pop()
    }
 
    this.control = function(val) {
@@ -45,11 +54,9 @@ function Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCou
    //reset everything
    this.reset = function(bg) {
       this.bg.reset()
-      this.bird.reset()
-      for (let i = 0; i < this.pipeCount; i++) {
+      for (let i = 0; i < this.pipeCount; i++)
          this.pipes[i].reset()
-         this.control()
-      }
+      this.bird.reset(this.pause)
       this.bird.revive()
    }
 }
