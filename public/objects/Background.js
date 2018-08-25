@@ -10,15 +10,16 @@ function Background(bg, bg2, speed) {
       image(this.bg2, this.x2, 0, this.bg2.width, windowHeight)
       this.x1 -= this.speed
       this.x2 -= this.speed
-      if (-this.x1 > this.bg.width - windowWidth) {
+      if (-this.x1 >= this.bg.width - windowWidth) {
          this.x1 = 0
       }
-      if (-this.x2 > this.bg2.width - windowWidth) {
+      if (-this.x2 >= this.bg2.width - windowWidth) {
          this.x2 = bg.width
       }
    }
 
    this.reset = function() {
-      this.x = 0
+      this.x1 = 0
+      this.x2 = bg.width
    }
 }

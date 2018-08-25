@@ -54,18 +54,19 @@ function Bird(mass, x, y) {
    }
 
    //reset everything
-   this.reset = function(pause) {
-      if (!pause) {
-         this.position = createVector(this.originalPosition.x, this.originalPosition.y)
-         this.jump(-9.8 * 2)
-      }
+   this.reset = function() {
+      this.position = createVector(this.originalPosition.x, this.originalPosition.y)
       this.velocity = 0
       this.acceleration = 0
+      this.score = 0
    }
 
    //kill and revive functions
    this.kill = function() { this.killed = true }
-   this.revive = function() { this.killed = false }
+   this.revive = function() {
+      this.killed = false
+      this.jump(-9.8 * 4)
+   }
 
    //scoring
    this.earnPoint = function() {

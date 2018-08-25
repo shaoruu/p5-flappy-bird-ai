@@ -17,8 +17,8 @@ function setup() {
    createCanvas(windowWidth, windowHeight)
    //load background
    bg = new Background(back, back2, 5)
-   //Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCount, pause)
-   game = new Game(bg, 5, windowWidth/2 - 300, windowHeight/2, 200, 250, 10, 4, true)
+   //Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCount, pipeStart, pause)
+   game = new Game(bg, 5, windowWidth/2 - 300, windowHeight/2, 200, 250, 10, 3, 100, true)
    // bird = new Bird(5, windowWidth/2 - 300, 0)
    game.setup()
 }
@@ -32,8 +32,10 @@ function draw() {
 }
 
 function keyPressed() {
-   if (key === ' ') {
+   if (key === ' ')
       game.control(-9.8 * 5)
-      // console.log(frameCount)
-   }
+}
+
+function mousePressed() {
+   game.reset()
 }

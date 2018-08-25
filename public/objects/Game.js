@@ -1,43 +1,32 @@
-function Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCount, pause) {
+function Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCount, pipeStart, pause) {
    this.bird = new Bird(birdMass, birdX, birdY)
-   this.pipeInterval = (windowWidth) / (pipeCount - 1) - pipeWidth
-   this.pipeCount = pipeCount
-   this.pipes = new Array(this.pipeCount)
+   this.pipes = new Pipes(pipeCount, pipeWidth, pipeGap, pipeSpeed, pipeStart)
    this.bg = bg
    this.run = true
    this.pause = pause
 
    // console.log(this.pipeCount)
    this.setup = function() {
-      console.log([pipeWidth, this.pipeInterval, this.pipeCount, windowWidth, this.pipes])
-      for (let i = 0; i < this.pipeCount; i++) {
-         //pipe(x, w, gap, speed, interval)
-         this.pipes[i] = new Pipe(windowWidth - 100 + (this.pipeInterval + pipeWidth) * i, pipeWidth, pipeGap, pipeSpeed, this.pipeInterval)
-         this.pipes[i].setup()
-      }
+      this.pipes.setup()
       this.control(-9.8 * 2)
       // console.log(this.bird)
       // console.log(windowWidth)
    }
 
    this.draw = function(bg, birdImg, pipeDownImg, pipeUpImg, font) {
-      for (let i = 0; i < this.pipeCount; i++) {
-         this.pipes[i].draw(this.bird, pipeDownImg, pipeUpImg)
-         this.pipes[i].hit(this.bird)
-      }
+      this.pipes.draw(this.bird, pipeDownImg, pipeUpImg)
 
       if (this.bird.killed) {
-         this.reset(this.pause)
-         if (this.pause) {
+         if (this.pause)
             this.run = false
-         }
          else
-            this.bird.setScore(0)
+            this.reset(this.bg)
       }
 
       this.bird.update(9.8 * 0.3)
       this.bird.draw(birdImg)
       this.bird.checkEdges()
+
       push()
          rectMode(CENTER)
          textFont(font)
@@ -54,9 +43,14 @@ function Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCou
    //reset everything
    this.reset = function(bg) {
       this.bg.reset()
-      for (let i = 0; i < this.pipeCount; i++)
-         this.pipes[i].reset()
-      this.bird.reset(this.pause)
+      this.run = true
+      this.pipes.reset()
+      this.bird.reset()
       this.bird.revive()
+   }
+
+   //on off pause
+   this.triggerMode = function() {
+      this.pause = !this.pause
    }
 }
