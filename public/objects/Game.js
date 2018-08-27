@@ -4,17 +4,27 @@ function Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCou
    this.bg = bg
    this.run = true
    this.pause = pause
+   this.neuralNetwork = new NeuralNetwork()
 
    // console.log(this.pipeCount)
    this.setup = function() {
       this.pipes.setup()
       this.control(-9.8 * 2)
+      this.neuralNetwork.setup()
       // console.log(this.bird)
       // console.log(windowWidth)
    }
 
    this.draw = function(bg, birdImg, pipeDownImg, pipeUpImg, font) {
       this.pipes.draw(this.bird, pipeDownImg, pipeUpImg)
+
+      push()
+         fill(255, 0, 0)
+         stroke(0)
+         line(this.bird.position.x, this.bird.position.y, this.pipes.nextLocation[0], this.pipes.nextLocation[1])
+      pop()
+
+      this.neuralNetwork.feed(this.pipes.nextLocation[0], this.pipes.nextLocation[1])
 
       if (this.bird.killed) {
          if (this.pause)
@@ -34,6 +44,8 @@ function Game(bg, birdMass, birdX, birdY, pipeWidth, pipeGap, pipeSpeed, pipeCou
          fill(255)
          text(this.bird.score, windowWidth/2, 100)
       pop()
+
+      if (this.neuralNetwork.isJump) this.control(-9.8 * 2)
    }
 
    this.control = function(val) {

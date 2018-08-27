@@ -18,13 +18,14 @@ function Pipe(x, w, gap, speed, interval) {
       // console.log(this.x)
    }
 
-   this.draw = function(bird, pipeDownImg, pipeUpImg) {
+   this.draw = function(bird, pipeDownImg, pipeUpImg, isNext) {
       let upY = this.y1 - pipeDownImg.height
       image(pipeDownImg, this.x, upY, this.w, pipeDownImg.height)
       image(pipeUpImg, this.x, this.y1 + this.gap, this.w, pipeUpImg.height)
       push()
          stroke(0)
-         fill(234, 252, 40)
+         if (isNext) fill(0, 255, 0)
+         else fill(234, 252, 40)
          ellipse(this.x + this.w / 2, this.y1 + this.gap/2, 8, 8)
       pop()
       this.x -= this.speed
